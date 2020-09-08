@@ -57,10 +57,11 @@ export async function createProject(options) {
     name: 'Dominik Kundel',
   };
 
+  const fullPathName = new URL(import.meta.url).pathname;
   const templateDir = path.resolve(
-    new URL(import.meta.url).pathname,
+    fullPathName.substr(fullPathName.indexOf('/')),
     '../../templates',
-    options.template
+    options.template.toLowerCase()
   );
   options.templateDirectory = templateDir;
 
