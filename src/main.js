@@ -9,6 +9,7 @@ import { projectInstall } from 'pkg-install';
 import license from 'spdx-license-list/licenses/MIT';
 import { promisify } from 'util';
 
+const os = require('os');
 const access = promisify(fs.access);
 const writeFile = promisify(fs.writeFile);
 const copy = promisify(ncp);
@@ -63,6 +64,9 @@ export async function createProject(options) {
     '../../templates',
     options.template.toLowerCase()
   );
+  if (os.platform() == 'win32') {
+    templateDir = templateDir.replace(/^(\w:\\)(\w:\\)/, '$2');
+  }
   options.templateDirectory = templateDir;
 
   try {
